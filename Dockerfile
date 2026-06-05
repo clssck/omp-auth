@@ -5,10 +5,10 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 # Self-contained omp binary (bundles auth-broker / auth-gateway).
-# Pin a release for reproducible deploys, e.g.:
-#   RUN curl -fsSL https://omp.sh/install | sh -s -- --binary --ref v15.8.3
+# v15.9.2 is currently source-only on GitHub; pin to the latest published
+# prebuilt binary so rebuilds are reproducible.
 ENV PI_INSTALL_DIR=/usr/local/bin
-RUN curl -fsSL https://omp.sh/install | sh -s -- --binary
+RUN curl -fsSL https://omp.sh/install | sh -s -- --binary --ref v15.9.1
 
 # omp's config root is $HOME/.omp. Mount a volume at /data/.omp to persist the
 # credential vault (agent/agent.db) and the broker bearer token across restarts.
