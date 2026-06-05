@@ -43,6 +43,8 @@ WORKDIR /pi
 RUN bun install --frozen-lockfile --ignore-scripts
 RUN bun --cwd=packages/coding-agent run generate-docs-index
 COPY --from=natives-builder /out/pi_natives.linux-*.node /opt/bun/bin/
+RUN cp /opt/bun/bin/pi_natives.linux-*.node /usr/local/bin/ \
+ && cp /opt/bun/bin/pi_natives.linux-*.node /pi/packages/natives/native/
 RUN printf '%s\n' \
     '#!/usr/bin/env bash' \
     'set -euo pipefail' \
