@@ -41,8 +41,8 @@ RUN apt-get update \
 COPY --from=pi-src /pi /pi
 WORKDIR /pi
 RUN bun install --frozen-lockfile --ignore-scripts
-RUN bun --cwd=packages/coding-agent run generate-docs-index
-RUN bun --cwd=packages/collab-web run build:tool-views
+RUN bun --cwd=packages/coding-agent run gen:docs
+RUN bun --cwd=packages/collab-web run gen:tool-views
 COPY --from=natives-builder /out/pi_natives.linux-*.node /opt/bun/bin/
 RUN cp /opt/bun/bin/pi_natives.linux-*.node /usr/local/bin/ \
  && cp /opt/bun/bin/pi_natives.linux-*.node /pi/packages/natives/native/
