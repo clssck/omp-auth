@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 ARG BUN_VERSION=1.3.14
 ARG PI_REPO=https://github.com/clssck/oh-my-pi.git
-ARG PI_REF=66acb3dbb56314fb2d9e1e819b74e9db5d9e5af9
+ARG PI_REF=16e64c4c60b4013bb1b0c0ce8972da48e3c3ab9c
 
 FROM debian:bookworm-slim AS pi-src
 ARG PI_REPO
