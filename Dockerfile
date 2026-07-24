@@ -16,7 +16,7 @@ RUN GIT_LFS_SKIP_SMUDGE=1 git clone --filter=blob:none "${PI_REPO}" /pi \
 FROM rust:1.86-slim-bookworm AS natives-builder
 ARG BUN_VERSION
 RUN apt-get update \
- && apt-get install -y --no-install-recommends curl ca-certificates pkg-config libssl-dev unzip git \
+ && apt-get install -y --no-install-recommends curl ca-certificates pkg-config libssl-dev libclang-dev unzip git \
  && rm -rf /var/lib/apt/lists/*
 RUN curl -fsSL https://bun.sh/install | bash -s "bun-v${BUN_VERSION}" \
  && /root/.bun/bin/bun --version
