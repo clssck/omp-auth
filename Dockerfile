@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1
 ARG BUN_VERSION=1.3.14
 ARG PI_REPO=https://github.com/clssck/oh-my-pi.git
-# Published upstream omp 17.1.1; broker needs no deployment-only source patches.
-ARG PI_REF=e9c8a35f5aa7c441d8962dc7e67478af5ab21f55
+# Published upstream omp 17.1.2; broker needs no deployment-only source patches.
+ARG PI_REF=a38cd95d7d8c457a22f1b81c059b5491d78f79a3
 
 FROM debian:bookworm-slim AS pi-src
 ARG PI_REPO
