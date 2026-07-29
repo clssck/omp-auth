@@ -1,8 +1,9 @@
 # syntax=docker/dockerfile:1
 ARG BUN_VERSION=1.3.14
+ARG BAZELISK_VERSION=1.29.0
 ARG PI_REPO=https://github.com/clssck/oh-my-pi.git
-# Published upstream omp 17.1.2; broker needs no deployment-only source patches.
-ARG PI_REF=a38cd95d7d8c457a22f1b81c059b5491d78f79a3
+# Published upstream omp 17.1.8; broker needs no deployment-only source patches.
+ARG PI_REF=f446b8a8193e59b4cbd2cf487ab6fa1915e0b890
 
 FROM debian:bookworm-slim AS pi-src
 ARG PI_REPO
@@ -15,18 +16,24 @@ RUN GIT_LFS_SKIP_SMUDGE=1 git clone --filter=blob:none "${PI_REPO}" /pi \
 
 FROM rust:1.86-slim-bookworm AS natives-builder
 ARG BUN_VERSION
+ARG BAZELISK_VERSION
 RUN apt-get update \
  && apt-get install -y --no-install-recommends curl ca-certificates pkg-config libssl-dev libclang-dev cmake g++ make unzip git \
  && rm -rf /var/lib/apt/lists/*
+RUN arch="$(dpkg --print-architecture)" \
+ && curl -fsSL "https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-linux-${arch}" \
+      -o /usr/local/bin/bazelisk \
+ && chmod +x /usr/local/bin/bazelisk \
+ && ln -s /usr/local/bin/bazelisk /usr/local/bin/bazel
 RUN curl -fsSL https://bun.sh/install | bash -s "bun-v${BUN_VERSION}" \
  && /root/.bun/bin/bun --version
-ENV PATH="/root/.bun/bin:/usr/local/cargo/bin:${PATH}"
+ENV BAZELISK_HOME=/opt/bazelisk \
+    PATH="/root/.bun/bin:/usr/local/cargo/bin:${PATH}"
 WORKDIR /pi
 COPY --from=pi-src /pi /pi
+RUN bazelisk version
 RUN bun install --frozen-lockfile --ignore-scripts
-RUN --mount=type=cache,target=/root/.cargo/registry \
-    --mount=type=cache,target=/root/.cargo/git \
-    --mount=type=cache,target=/pi/target \
+RUN --mount=type=cache,target=/root/.cache/bazel \
     set -eux; \
     rustup show; \
     bun --cwd=packages/natives run build; \
