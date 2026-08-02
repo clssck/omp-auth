@@ -2,8 +2,8 @@
 ARG BUN_VERSION=1.3.14
 ARG BAZELISK_VERSION=1.29.0
 ARG PI_REPO=https://github.com/clssck/oh-my-pi.git
-# Published upstream omp 17.1.8; broker needs no deployment-only source patches.
-ARG PI_REF=f446b8a8193e59b4cbd2cf487ab6fa1915e0b890
+# Published upstream omp 17.2.4; broker needs no deployment-only source patches.
+ARG PI_REF=06343fef4200c4e32d18f08df5a6a8bd84dcc710
 
 FROM debian:bookworm-slim AS pi-src
 ARG PI_REPO
