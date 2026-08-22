@@ -1,9 +1,9 @@
 # syntax=docker/dockerfile:1
-ARG BUN_VERSION=1.3.14
+ARG BUN_VERSION=1.4.0
 ARG BAZELISK_VERSION=1.29.0
 ARG PI_REPO=https://github.com/clssck/oh-my-pi.git
-# Patched omp 17.3.4 branch with broker-managed Google Vertex service accounts.
-ARG PI_REF=538aa31715f022889ef4469e46160f29148a8ca7
+# Patched omp 18.0.0 branch with broker-managed Google Vertex service accounts.
+ARG PI_REF=9c5425e39859c9dff30d98e6f52f174c137d2e15
 
 FROM debian:bookworm-slim AS pi-src
 ARG PI_REPO
