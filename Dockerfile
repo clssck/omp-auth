@@ -18,7 +18,7 @@ FROM rust:1.86-slim-bookworm AS natives-builder
 ARG BUN_VERSION
 ARG BAZELISK_VERSION
 RUN apt-get update \
- && apt-get install -y --no-install-recommends curl ca-certificates pkg-config libssl-dev libclang-dev cmake g++ make unzip git \
+ && apt-get install -y --no-install-recommends curl ca-certificates pkg-config libssl-dev libclang-dev cmake g++ make ninja-build unzip git \
  && rm -rf /var/lib/apt/lists/*
 RUN arch="$(dpkg --print-architecture)" \
  && curl -fsSL "https://github.com/bazelbuild/bazelisk/releases/download/v${BAZELISK_VERSION}/bazelisk-linux-${arch}" \
