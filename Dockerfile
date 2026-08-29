@@ -2,8 +2,8 @@
 ARG BUN_VERSION=1.4.0
 ARG BAZELISK_VERSION=1.29.0
 ARG PI_REPO=https://github.com/clssck/oh-my-pi.git
-# Patched omp 18.0.5 branch with broker-managed Google Vertex service accounts.
-ARG PI_REF=dea2a42e2751af47132e665937df2c0e9d84829b
+# Patched omp 18.0.10 branch with broker-managed Google Vertex service accounts.
+ARG PI_REF=8960c4c3b1b406a06b29ca36b8f42a890af6badc
 
 FROM debian:bookworm-slim AS pi-src
 ARG PI_REPO
